@@ -1,0 +1,41 @@
+{
+  "name": "viem-quoter",
+  "description": "Quote prices of assets with viem",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./_cjs/index.js",
+  "module": "./_esm/index.js",
+  "types": "./_types/index.d.ts",
+  "typings": "./_types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./_types/index.d.ts",
+      "import": "./_esm/index.js",
+      "default": "./_cjs/index.js"
+    },
+    "./actions": {
+      "types": "./_types/actions/index.d.ts",
+      "import": "./_esm/actions/index.js",
+      "default": "./_cjs/actions/index.js"
+    }
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.4",
+    "viem": "2.x"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "decimal.js": "^10.4.3",
+    "viem": "^2.7.10"
+  },
+  "license": "MIT",
+  "homepage": "https://viem-quoter.vercel.app",
+  "repository": "dalechyn/viem-quoter",
+  "authors": ["dalechyn.eth"],
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3", "quote", "price"]
+}

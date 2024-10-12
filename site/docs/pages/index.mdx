@@ -1,0 +1,16 @@
+---
+layout: landing
+---
+
+import { HomePage } from 'vocs/components'
+
+<HomePage.Root>
+  <HomePage.Logo />
+  <HomePage.Tagline>Don't pay for an API to get Ethereum price or any other!</HomePage.Tagline>
+  <HomePage.InstallPackage name="viem-quoter" type="init" />
+  <HomePage.Description>Viem extension for quoting prices from different DEXes across all chains.</HomePage.Description>
+  <HomePage.Buttons>
+    <HomePage.Button href="/getting-started" variant="accent">Get started</HomePage.Button>
+    <HomePage.Button href="https://github.com/dalechyn/viem-quoter">GitHub</HomePage.Button>
+  </HomePage.Buttons>
+</HomePage.Root>

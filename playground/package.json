@@ -1,0 +1,16 @@
+{
+  "name": "playground",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node --import tsx index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "viem-quoter": "workspace:*",
+    "viem": "^2.7.10"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1"
+  }
+}
