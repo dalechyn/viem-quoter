@@ -39,6 +39,28 @@ console.log(
 )
 ```
 
+Better tree shaking version:
+```ts
+import { getUniswapV3Price, getUniswapV3EthPrice } from 'viem-quoter/actions'
+import { createPublicClient, http } from 'viem'
+import { mainnet } from 'viem/chains'
+
+const publicClient = createPublicClient({
+  chain: mainnet,
+  transport: http(),
+})
+
+console.log('ETH/USD Price is:', await getUniswapV3EthPrice(publicClient))
+
+console.log(
+  'WBTC/ETH Price is:',
+  await getUniswapV3Price(publicClient, {
+    tokenToQuote: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', // WBTC
+    otherToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+  }),
+)
+```
+
 ## Authors
 
 - [@dalechyn](https://github.com/dalechyn) (dalechyn.eth [Twitter](https://twitter.com/dalechyn) [Warpcast](https://warpcast.com/dalechyn.eth))
