@@ -16,10 +16,10 @@ export {
 } from './uniswap/v3/getPriceByPoolAddress.js'
 
 export {
-  getPriceByPoolTokensAndFee as getUniswapV3PriceByPoolTokensAndFee,
-  GetPriceByPoolTokensAndFeeChainIsNotDefinedInClientError as GetUniswapV3PriceByPoolTokensAndFeeChainIsNotDefinedInClientError,
-  GetPriceByPoolTokensAndFeeNoFactoryForChainError as GetUniswapV3PriceByPoolTokensAndFeeNoFactoryForChainError,
-  type GetPriceByPoolTokensAndFeeParameters as GetUniswapV3PriceByPoolTokensAndFeeParameters,
-  type GetPriceByPoolTokensAndFeeErrorType as GetUniswapV3PriceByPoolTokensAndFeeErrorType,
-  type GetPriceByPoolTokensAndFeeReturnType as GetUniswapV3PriceByPoolTokensAndFeeReturnType,
-} from './uniswap/v3/getPriceByPoolTokensAndFee.js'
+  getPrice as getUniswapV3Price,
+  GetPriceChainIsNotDefinedInClientError as GetUniswapV3PriceChainIsNotDefinedInClientError,
+  GetPriceNoFactoryForChainError as GetUniswapV3PriceNoFactoryForChainError,
+  type GetPriceParameters as GetUniswapV3PriceParameters,
+  type GetPriceErrorType as GetUniswapV3PriceErrorType,
+  type GetPriceReturnType as GetUniswapV3PriceReturnType,
+} from './uniswap/v3/getPrice.js'

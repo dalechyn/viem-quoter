@@ -1,83 +1,70 @@
-import fs from 'node:fs/promises'
-import path from 'node:path'
-import { glob } from 'fast-glob'
+import {
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  symlinkSync,
+} from 'node:fs'
+import { basename, dirname, join, resolve } from 'node:path'
 
-// Get all package.json files
-const packagePaths = await glob('**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
-})
+// biome-ignore lint/suspicious/noConsoleLog:
+console.log('Setting up packages for development.')
 
-let _count = 0
-for (const packagePath of packagePaths) {
-  type Package = {
-    bin?: Record<string, string> | undefined
-    exports?:
-      | Record<string, { types: string; default: string } | string>
-      | undefined
-    name?: string | undefined
-    private?: boolean | undefined
-  }
-  const file = Bun.file(packagePath)
-  const packageJson = (await file.json()) as Package
+const packagePath = resolve(import.meta.dirname, '../src/package.json')
+const packageJson = JSON.parse(readFileSync(packagePath, 'utf-8'))
 
-  // Skip private packages
-  if (packageJson.private) continue
-  if (!packageJson.exports) continue
+// biome-ignore lint/suspicious/noConsoleLog:
+console.log(`${packageJson.name} — ${dirname(packagePath)}`)
 
-  _count += 1
+const dir = resolve(dirname(packagePath))
 
-  const dir = path.resolve(path.dirname(packagePath))
-
-  // Empty dist directory
-  const distDirName = '_lib'
-  const dist = path.resolve(dir, distDirName)
+// Empty dist directories
+for (const dirName of ['_cjs', '_esm', '_types']) {
+  const dist = resolve(dir, dirName)
   let files: string[] = []
   try {
-    files = await fs.readdir(dist)
+    files = readdirSync(dist)
   } catch {
-    await fs.mkdir(dist)
+    mkdirSync(dist)
   }
 
-  const promises: Promise<void>[] = []
-  for (const file of files) {
-    promises.push(
-      fs.rm(path.join(dist, file), { recursive: true, force: true }),
-    )
-  }
-  await Promise.all(promises)
+  for (const file of files)
+    rmSync(join(dist, file), { recursive: true, force: true })
+}
+
+// Link exports to dist locations
+for (const [key, exports] of Object.entries(packageJson.exports)) {
+  // Skip `package.json` exports
+  if (/package\.json$/.test(key)) continue
+
+  let entries: any
+  if (typeof exports === 'string')
+    entries = [
+      ['default', exports],
+      ['types', exports.replace('.js', '.d.ts')],
+    ]
+  else entries = Object.entries(exports as {})
 
   // Link exports to dist locations
-  for (const [key, exports] of Object.entries(packageJson.exports)) {
-    // Skip `package.json` exports
-    if (/package\.json$/.test(key)) continue
+  for (const [, value] of entries as [
+    type: 'types' | 'default',
+    value: string,
+  ][]) {
+    const srcDir = resolve(dir, dirname(value).replace(/_types|_esm|_cjs/, ''))
+    const srcFilePath = resolve(srcDir, 'index.ts')
 
-    let entries: any
-    if (typeof exports === 'string')
-      entries = [
-        ['default', exports],
-        ['types', exports.replace('.js', '.d.ts')],
-      ]
-    else entries = Object.entries(exports)
+    const distDir = resolve(dir, dirname(value))
+    const distFileName = basename(value)
+    const distFilePath = resolve(distDir, distFileName)
 
-    // Link exports to dist locations
-    for (const [, value] of entries as [
-      type: 'types' | 'default',
-      value: string,
-    ][]) {
-      const srcDir = path.resolve(
-        dir,
-        path.dirname(value).replace(distDirName, ''),
-      )
-      const srcFilePath = path.resolve(srcDir, 'index.ts')
+    mkdirSync(distDir, { recursive: true })
 
-      const distDir = path.resolve(dir, path.dirname(value))
-      const distFileName = path.basename(value)
-      const distFilePath = path.resolve(distDir, distFileName)
-
-      await fs.mkdir(distDir, { recursive: true })
-
-      // Symlink src to dist file
-      await fs.symlink(srcFilePath, distFilePath, 'file').catch(() => {})
-    }
+    // Symlink src to dist file
+    try {
+      symlinkSync(srcFilePath, distFilePath, 'file')
+    } catch {}
   }
 }
+
+// biome-ignore lint/suspicious/noConsoleLog:
+console.log('Done.')

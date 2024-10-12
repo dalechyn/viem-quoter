@@ -11,19 +11,19 @@ import {
 } from '../actions/uniswap/v3/getPriceByPoolAddress.js'
 
 import {
-  type GetPriceByPoolTokensAndFeeParameters as GetUniswapV3PriceByPoolTokensAndFeeParameters,
-  type GetPriceByPoolTokensAndFeeReturnType as GetUniswapV3PriceByPoolTokensAndFeeReturnType,
-  getPriceByPoolTokensAndFee as getUniswapV3PriceByPoolTokensAndFee,
-} from '../actions/uniswap/v3/getPriceByPoolTokensAndFee.js'
+  type GetPriceParameters as GetUniswapV3PriceParameters,
+  type GetPriceReturnType as GetUniswapV3PriceReturnType,
+  getPrice as getUniswapV3Price,
+} from '../actions/uniswap/v3/getPrice.js'
 
 export type PublicViemQuoterActions = {
   getUniswapV3EthPrice(): Promise<GetUniswapV3EthPriceReturnType>
   getUniswapV3PriceByPoolAddress(
     args: GetUniswapV3PriceByPoolAddressParameters,
   ): Promise<GetUniswapV3PriceByPoolAddressReturnType>
-  getUniswapV3PriceByPoolTokensAndFee(
-    args: GetUniswapV3PriceByPoolTokensAndFeeParameters,
-  ): Promise<GetUniswapV3PriceByPoolTokensAndFeeReturnType>
+  getUniswapV3Price(
+    args: GetUniswapV3PriceParameters,
+  ): Promise<GetUniswapV3PriceReturnType>
 }
 export function publicViemQuoterActions<
   TTransport extends Transport = Transport,
@@ -33,7 +33,6 @@ export function publicViemQuoterActions<
     getUniswapV3EthPrice: () => getUniswapV3EthPrice(client),
     getUniswapV3PriceByPoolAddress: (args) =>
       getUniswapV3PriceByPoolAddress(client, args),
-    getUniswapV3PriceByPoolTokensAndFee: (args) =>
-      getUniswapV3PriceByPoolTokensAndFee(client, args),
+    getUniswapV3Price: (args) => getUniswapV3Price(client, args),
   }
 }
