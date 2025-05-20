@@ -1,7 +1,7 @@
 {
   "name": "viem-quoter",
   "description": "Quote prices of assets with viem",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "./_cjs/index.js",
   "module": "./_esm/index.js",
@@ -36,6 +36,16 @@
   "license": "MIT",
   "homepage": "https://viem-quoter.vercel.app",
   "repository": "dalechyn/viem-quoter",
-  "authors": ["dalechyn.eth"],
-  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3", "quote", "price"]
+  "authors": [
+    "dalechyn.eth"
+  ],
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3",
+    "quote",
+    "price"
+  ]
 }
