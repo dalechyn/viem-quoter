@@ -36,16 +36,6 @@
   "license": "MIT",
   "homepage": "https://viem-quoter.vercel.app",
   "repository": "dalechyn/viem-quoter",
-  "authors": [
-    "dalechyn.eth"
-  ],
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3",
-    "quote",
-    "price"
-  ]
+  "authors": ["dalechyn.eth"],
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3", "quote", "price"]
 }
